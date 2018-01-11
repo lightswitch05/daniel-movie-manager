@@ -26,5 +26,7 @@ build: test
 test:
 	@RAILS_ENV=test bundle exec rails test
 
-verify: test
+verify: test lint
+
+lint:
 	@bundle exec rake validate
