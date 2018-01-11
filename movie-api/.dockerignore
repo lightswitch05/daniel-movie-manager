@@ -1,0 +1,6 @@
+log/*
+tmp/*
+.gitignore
+Dockerfile
+README.md
+Makefile
