@@ -11,9 +11,13 @@ usage:
 	@echo
 
 # install dependencies
-setup:
-	make -C movie-api $(MAKECMDGOALS)
-	make -C web-client $(MAKECMDGOALS)
+setup: setup-web-client setup-movie-api
+
+setup-web-client:
+	make -C web-client setup
+
+setup-movie-api:
+	make -C movie-api setup
 
 test:
 	make -C movie-api $(MAKECMDGOALS)

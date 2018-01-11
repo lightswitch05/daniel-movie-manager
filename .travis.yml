@@ -6,12 +6,11 @@ matrix:
       rvm:
         - 2.4
       before_script:
-       - make setup
-         cp config/database.yml.travis config/database.yml
+       - make setup-movie-api && cp ./movie-api/config/database.yml.travis ./movie-api/config/database.yml
       script: make movie-api
 
     - language: node_js
       node_is:
         - 9.4
-      before_script: make setup
+      before_script: make setup-web-client
       script: make web-client
