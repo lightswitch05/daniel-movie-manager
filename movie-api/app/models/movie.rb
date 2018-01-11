@@ -1,6 +1,6 @@
 class Movie < ApplicationRecord
   validates :title, presence: true, length: { minimum: 1, maximum: 50 }
-  validates :format, allow_nil: true, inclusion: %w(VHS DVD Streaming)
+  validates :format, allow_nil: true, inclusion: %w[VHS DVD Streaming]
   validates :length,
             allow_nil: true,
             numericality: { only_integer: true, greater_than: 0, less_than: 500 }
