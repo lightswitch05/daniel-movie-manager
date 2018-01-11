@@ -1,0 +1,11 @@
+matrix:
+  include:
+    - language: ruby
+      rvm:
+        - 2.4
+      script: make setup && make movie-api
+
+    - language: node_js
+      node_is:
+        - 9.4
+      script: make setup && make web-client

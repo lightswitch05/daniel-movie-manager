@@ -7,5 +7,5 @@ nvm install node
 nvm use node
 npm install --loglevel=error -g @angular/cli
 cd /home/vagrant/daniel-movie-manager/web-client
-npm install --loglevel=error
+make setup
 cd -
