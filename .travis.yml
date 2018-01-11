@@ -1,11 +1,17 @@
 matrix:
+  services:
+    postgresql
   include:
     - language: ruby
       rvm:
         - 2.4
-      script: make setup && make movie-api
+      before_script:
+       - make setup
+         cp config/database.yml.travis config/database.yml
+      script: make movie-api
 
     - language: node_js
       node_is:
         - 9.4
-      script: make setup && make web-client
+      before_script: make setup
+      script: make web-client
