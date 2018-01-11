@@ -6,6 +6,6 @@ source ~/.rvm/scripts/rvm
 rvm install ruby-2.4
 sudo apt-get install libpq-dev
 gem install bundler
-cd /home/vagrant/track-my-vids/movie-api
+cd /home/vagrant/daniel-movie-manager/movie-api
 bundle install
 cd -

@@ -1,5 +1,5 @@
-Track My Vids
-=============
+Daniel's Movie Manager
+======================
 
 # [Environment](./environment/README.md)
 

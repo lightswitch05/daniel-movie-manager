@@ -6,6 +6,6 @@ export NVM_DIR="$HOME/.nvm"
 nvm install node
 nvm use node
 npm install --loglevel=error -g @angular/cli
-cd /home/vagrant/track-my-vids/web-client
+cd /home/vagrant/daniel-movie-manager/web-client
 npm install --loglevel=error
 cd -

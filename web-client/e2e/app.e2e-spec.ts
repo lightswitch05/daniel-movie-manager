@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('track-my-vids App', () => {
+describe('daniel-movie-manager App', () => {
   let page: AppPage;
 
   beforeEach(() => {
