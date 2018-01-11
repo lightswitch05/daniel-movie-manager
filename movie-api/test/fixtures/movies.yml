@@ -1,0 +1,22 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: Bill and Ted's Most Excellent Adventure
+  format: VHS
+  length: 90
+  release_year: 1989
+  rating: 5
+
+two:
+  title: It
+  format: DVD
+  length: 135
+  release_year: 2017
+  rating: 4
+
+three:
+  title: It
+  format: VHS
+  length: 192
+  release_year: 1990
+  rating: 3
