@@ -20,8 +20,8 @@ setup:
 # build docker image
 build: test
 	@docker login
-	@docker build -t lightswitch05/track-my-vids:0.0.1 .
-	@docker push lightswitch05/track-my-vids:0.0.1
+	@docker build -t lightswitch05/movie-api:0.0.1 .
+	@docker push lightswitch05/movie-api:0.0.1
 
 test:
 	@RAILS_ENV=test bundle exec rails test
