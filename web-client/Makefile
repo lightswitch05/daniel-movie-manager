@@ -9,6 +9,9 @@ usage:
 	@echo '    test                 run unit tests'
 	@echo '    verify               run unit tests with linting'
 	@echo '    lint                 run linting'
+	@echo '    build                build static site in ./dist'
+	@echo '    build-docker         build the docker image'
+	@echo '    serve                start development server'
 	@echo
 
 setup:
@@ -24,6 +27,9 @@ lint:
 
 build:
 	@npm run build
+
+serve:
+	@npm run start
 
 build-docker:
 #	@docker login
