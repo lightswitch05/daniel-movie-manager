@@ -11,14 +11,14 @@ The environment is an Ubuntu VM with Ruby, Node, and Docker installed. It also h
 
 * SSH into development environment: `vagrant ssh dev`
 * Project source is in `~/daniel-movie-manager`
-* Machine address is 192.168.8.1
+* Machine address is 192.168.233.2
 
 ## Integration
 
 This environment is a bare bone Ubuntu VM with Docker installed. It has PostgreSQL and the application docker images running and configured. This is useful for integration testing before continuing to production. 
 
 * SSH into integration environment: `vagrant ssh int`
-* Access Movie API: http://192.168.8.2:3000/
+* Access Movie API: http://192.168.233.3:3000/
 
 
 ## Cleanup

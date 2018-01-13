@@ -1,0 +1,428 @@
+{
+	"info": {
+		"name": "Movie API",
+		"_postman_id": "13bd513f-97a6-480f-3cbb-c2a07d93d6c9",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "List movies",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Length",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/v1/movies",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"v1",
+						"movies"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create Bill & Ted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "230f9f4e-438a-469f-9417-588e64315759",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"response has a id\", function () {",
+							"    pm.expect(jsonData).to.have.property('id');",
+							"    pm.expect(jsonData.id).to.not.be.null;",
+							"    pm.environment.set(\"billAndTedId\", jsonData.id);",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Bill and Ted's Most Excellent Adventure\",\n\t\"format\": \"VHS\",\n\t\"length\": 90,\n\t\"release_year\": 1989,\n\t\"rating\": 5\n}"
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/v1/movies",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"v1",
+						"movies"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Bill & Ted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4954abe7-9ed0-41a0-93fd-98e4f9586e21",
+						"type": "text/javascript",
+						"exec": [
+							"var expectedId = Number(pm.environment.get(\"billAndTedId\"));",
+							"",
+							"pm.test(\"response code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"response has a id\", function () {",
+							"    pm.expect(jsonData).to.have.property('id', expectedId);",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Bill and Ted's Most Excellent Adventure\",\n\t\"format\": \"VHS\",\n\t\"length\": 90,\n\t\"release_year\": 1989,\n\t\"rating\": 5\n}"
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/v1/movies/{{billAndTedId}}",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"v1",
+						"movies",
+						"{{billAndTedId}}"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update Bill & Ted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "57bd8013-7400-4cfe-8b16-1098bb7a2caa",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"response has a rating of 4\", function () {",
+							"    pm.expect(jsonData).to.have.property('rating');",
+							"    pm.expect(jsonData).to.have.property('rating', 4);",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Bill and Ted's Most Excellent Adventure\",\n\t\"format\": \"VHS\",\n\t\"length\": 90,\n\t\"release_year\": 1989,\n\t\"rating\": 4\n}"
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/v1/movies/{{billAndTedId}}",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"v1",
+						"movies",
+						"{{billAndTedId}}"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create It (2017)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7162d66d-b88f-49e7-b07d-72774ffb25b5",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"response has a id\", function () {",
+							"    pm.expect(jsonData).to.have.property('id');",
+							"    pm.expect(jsonData.id).to.not.be.null;",
+							"    pm.environment.set(\"itNewId\", jsonData.id);",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"It\",\n\t\"format\": \"DVD\",\n\t\"length\": 135,\n\t\"release_year\": 2017,\n\t\"rating\": 4\n}"
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/v1/movies",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"v1",
+						"movies"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get It (2017)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2cbfea60-cf94-4f72-990c-b547d45582e3",
+						"type": "text/javascript",
+						"exec": [
+							"var expectedId = Number(pm.environment.get(\"itNewId\"));",
+							"",
+							"pm.test(\"response code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"response has a id\", function () {",
+							"    pm.expect(jsonData).to.have.property('id', expectedId);",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Bill and Ted's Most Excellent Adventure\",\n\t\"format\": \"VHS\",\n\t\"length\": 90,\n\t\"release_year\": 1989,\n\t\"rating\": 5\n}"
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/v1/movies/{{itNewId}}",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"v1",
+						"movies",
+						"{{itNewId}}"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create It (1990)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2efb2230-5c91-42da-97c4-bbfd5d263178",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"response has a id\", function () {",
+							"    pm.expect(jsonData).to.have.property('id');",
+							"    pm.expect(jsonData.id).to.not.be.null;",
+							"    pm.environment.set(\"itOldId\", jsonData.id);",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"It\",\n\t\"format\": \"VHS\",\n\t\"length\": 192,\n\t\"release_year\": 1990,\n\t\"rating\": 3\n}"
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/v1/movies",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"v1",
+						"movies"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get It (2017)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b106eae7-d10f-4401-98e0-63c725185d09",
+						"type": "text/javascript",
+						"exec": [
+							"var expectedId = Number(pm.environment.get(\"itOldId\"));",
+							"",
+							"pm.test(\"response code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"response has a id\", function () {",
+							"    pm.expect(jsonData).to.have.property('id', expectedId);",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Bill and Ted's Most Excellent Adventure\",\n\t\"format\": \"VHS\",\n\t\"length\": 90,\n\t\"release_year\": 1989,\n\t\"rating\": 5\n}"
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/v1/movies/{{itOldId}}",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"v1",
+						"movies",
+						"{{itOldId}}"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

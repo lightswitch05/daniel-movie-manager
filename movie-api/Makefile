@@ -6,18 +6,20 @@ usage:
 	@echo 'Usage: make <action>'
 	@echo
 	@echo '    setup                install dependencies'
+	@echo '    serve                run development server'
 	@echo '    build                build docker image'
 	@echo '    test                 run unit tests'
 	@echo '    verify               run unit tests with linting'
 	@echo
 
-# install dependencies
 setup:
 	@bundle install
 	@RAILS_ENV=development bundle exec rake db:migrate
 	@RAILS_ENV=test bundle exec rake db:migrate
 
-# build docker image
+serve:
+	@RAILS_ENV=development bundle exec rails server -b 0.0.0.0
+
 build: test
 	@docker login
 	@docker build -t lightswitch05/movie-api:0.0.1 .
