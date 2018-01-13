@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   scope '/movie-api' do
     namespace :v1 do
-      resources :movies, only: [:index, :create, :show, :update]
+      resources :movies, only: %i[index create show update destroy]
     end
   end
 

@@ -1,5 +1,4 @@
 class V1::MoviesController < ApplicationController
-
   def create
     movie = Movie.new(create_movie_params)
     movie.save
@@ -12,9 +11,9 @@ class V1::MoviesController < ApplicationController
     render json: movie
   end
 
-  def delete
+  def destroy
     Movie.delete(params[:id])
-    render nothing: true, status: :no_content
+    head :no_content
   end
 
   def index
@@ -26,7 +25,6 @@ class V1::MoviesController < ApplicationController
     movie = Movie.find(params[:id])
     render json: movie
   end
-
 
   private
 
