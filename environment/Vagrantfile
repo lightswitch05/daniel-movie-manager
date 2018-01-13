@@ -39,6 +39,9 @@ Vagrant.configure(2) do |config|
       docker.run "movie-api",
                  image: "lightswitch05/movie-api:#{largest_tag}",
                  args: "-p 3000:3000 -e DATABASE_HOST=$(ifconfig docker0 | grep \"inet \" | awk '{print $2}' | cut -d ':' -f 2) -e DATABASE_PASSWORD=vagrant -e SECRET_KEY_BASE=c91aade7caee5a3116ea2d8d4db7a490c14550eb95f9070416d08f761e6f57c51448169e3442126dbc2c528b06638d7df3159e2e6b81e6ad08bc30aa728ee0b7"
+      docker.run "web-client",
+                 image: "lightswitch05/web-client:#{largest_tag}",
+                 args: "-p 80:80"
     end
   end
 end

@@ -21,3 +21,11 @@ verify: test lint
 
 lint:
 	@npm run lint
+
+build:
+	@npm run build
+
+build-docker:
+#	@docker login
+	@docker build -t lightswitch05/web-client:dev .
+#	@docker push lightswitch05/web-client:0.0.1

@@ -20,10 +20,10 @@ setup:
 serve:
 	@RAILS_ENV=development bundle exec rails server -b 0.0.0.0
 
-build: test
-	@docker login
-	@docker build -t lightswitch05/movie-api:0.0.1 .
-	@docker push lightswitch05/movie-api:0.0.1
+build-docker: test
+#	@docker login
+	@docker build -t lightswitch05/movie-api:dev .
+#	@docker push lightswitch05/movie-api:0.0.1
 
 test:
 	@RAILS_ENV=test bundle exec rails test

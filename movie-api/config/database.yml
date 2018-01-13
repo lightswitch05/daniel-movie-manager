@@ -86,8 +86,8 @@ test:
 #
 production:
   <<: *default
-  database: movie-api
-  username: movie-api
+  database: movieapi
+  username: movieapi
   port: 5432
   host: <%= ENV['DATABASE_HOST'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
