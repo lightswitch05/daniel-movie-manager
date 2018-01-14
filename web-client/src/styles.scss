@@ -1,8 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 //@import "../node_modules/bootstrap/scss/bootstrap.scss";
+$secondary: rgb(70, 209, 190);
 @import "~bootstrap/scss/bootstrap";
 
 footer {
-  @extend .text-center;
+  @extend .fixed-bottom;
   background-color: $gray-100;
+
+  .social-links a, .social-links a:hover {
+    color: #000;
+    text-decoration: none;
+  }
 }
