@@ -1,0 +1,8 @@
+{
+  "/movie-api": {
+    "target": "http://192.168.233.2:3000",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

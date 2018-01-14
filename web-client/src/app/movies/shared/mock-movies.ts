@@ -72,5 +72,14 @@ export const MOVIES: Movie[] = [
     release_year: 2011,
     rating: 5,
     poster: 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjIyZGU4YzUtNDkzYi00ZDRhLTljYzctYTMxMDQ4M2E0Y2YxXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_SX300.jpg'
+  },
+  {
+    id: 51,
+    title: 'Fantastic Beasts and Where to Find Them',
+    format: MovieFormat.STREAMING,
+    length: 133,
+    release_year: 2016,
+    rating: 3,
+    poster: null
   }
 ];

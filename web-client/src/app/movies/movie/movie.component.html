@@ -1,5 +1,5 @@
 <div class="card movie-card" style="width: 18rem;">
-  <img class="card-img-top" [src]="movie.poster" alt="Move poster" (click)="togglePoster()">
+  <img class="card-img-top" [src]="movie.poster || 'assets/missing-poster.png'" alt="Move poster" (click)="togglePoster()">
   <div class="card-img-overlay" [ngClass]="{'full-poster': fullPoster}">
     <h5 class="card-title">{{movie.title}}</h5>
     <dl class="row">
