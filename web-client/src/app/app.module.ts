@@ -11,7 +11,6 @@ import { MovieComponent } from './movies/movie/movie.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { MovieListComponent } from './movies/movie-list/movie-list.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
