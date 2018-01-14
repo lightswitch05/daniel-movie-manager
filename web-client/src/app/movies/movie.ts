@@ -8,7 +8,7 @@ export class Movie {
 }
 
 export enum MovieFormat {
-  VHS = "VHS",
-  DVD = "DVD",
-  STREAMING = "Streaming"
+  VHS = 'VHS',
+  DVD = 'DVD',
+  STREAMING = 'Streaming'
 }
