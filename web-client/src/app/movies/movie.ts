@@ -5,6 +5,7 @@ export class Movie {
   length: number;
   release_year: number;
   rating: number;
+  poster?: string;
 }
 
 export enum MovieFormat {

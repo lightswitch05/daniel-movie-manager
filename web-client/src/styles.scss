@@ -3,6 +3,10 @@
 $secondary: rgb(70, 209, 190);
 @import "~bootstrap/scss/bootstrap";
 
+body {
+  padding-bottom: 100px;
+}
+
 footer {
   @extend .fixed-bottom;
   background-color: $gray-100;

@@ -1,3 +1,21 @@
-<p>
-  movie works!
-</p>
+<div class="card movie-card" style="width: 18rem;">
+  <img class="card-img-top" [src]="movie.poster" alt="Move poster" (click)="togglePoster()">
+  <div class="card-img-overlay" [ngClass]="{'full-poster': fullPoster}">
+    <h5 class="card-title">{{movie.title}}</h5>
+    <dl class="row">
+      <dt class="col-sm-6">Release Year</dt>
+      <dd class="col-sm-5">{{movie.release_year}}</dd>
+
+      <dt class="col-sm-6">Format</dt>
+      <dd class="col-sm-5">{{movie.format}}</dd>
+
+      <dt class="col-sm-6">Length</dt>
+      <dd class="col-sm-5">{{formattedLength()}}</dd>
+
+      <dt class="col-sm-6">Rating</dt>
+      <dd class="col-sm-5">
+        <ngb-rating class="movie-rating" [(rate)]="movie.rating" max="5"></ngb-rating>
+      </dd>
+    </dl>
+  </div>
+</div>
