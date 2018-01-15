@@ -1,14 +1,20 @@
 class V1::MoviesController < ApplicationController
   def create
     movie = Movie.new(create_movie_params)
-    movie.save
-    render json: movie, status: :created
+    if movie.save
+      render json: movie, status: :created
+    else
+      render_errors(movie)
+    end
   end
 
   def update
     movie = Movie.find(params[:id])
-    movie.update(update_movie_params)
-    render json: movie
+    if movie.update(update_movie_params)
+      render json: movie
+    else
+      render_errors(movie)
+    end
   end
 
   def destroy
@@ -27,6 +33,10 @@ class V1::MoviesController < ApplicationController
   end
 
   private
+
+  def render_errors(movie)
+    render json: movie.errors.messages, status: :unprocessable_entity
+  end
 
   # Force required Movie params for +create+
   def create_movie_params
