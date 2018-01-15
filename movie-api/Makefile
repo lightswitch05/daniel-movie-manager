@@ -10,6 +10,8 @@ usage:
 	@echo '    build                build docker image'
 	@echo '    test                 run unit tests'
 	@echo '    verify               run unit tests with linting'
+	@echo ''
+	@echo 'Notes: Ensure $OMDB_API_KEY is set before running serve'
 	@echo
 
 setup:

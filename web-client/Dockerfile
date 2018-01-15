@@ -13,6 +13,9 @@ RUN npm -g config set user root \
 # Runtime
 FROM nginx:1.13-alpine
 
+RUN apk --no-cache add --upgrade nano \
+    && rm -rf /var/cache/apk/*
+
 COPY --from=builder /opt/web-client/dist /usr/share/nginx/html/
 ADD nginx/ /etc/nginx/conf.d
 
