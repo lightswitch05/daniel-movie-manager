@@ -3,12 +3,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 
 import { Movie } from './movie';
+import { MovieError } from './movie-error';
+import apply = Reflect.apply;
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  observable: 'response'
 };
 
 @Injectable()
@@ -39,29 +42,25 @@ export class MovieService {
   /** GET movie by id. Will 404 if id not found */
   getMovie(id: number): Observable<Movie> {
     const url = `${this.moviesUrl}/${id}`;
-    return this.http.get<Movie>(url).pipe(
-      catchError(this.handleError<Movie>(`getMovie id=${id}`))
-    );
-  }
-
-  /* GET movies whose name contains search term */
-  searchMovies(term: string): Observable<Movie[]> {
-    if (!term.trim()) {
-      // if not search term, return empty movie array.
-      return of([]);
-    }
-    return this.http.get<Movie[]>(`api/movies/?name=${term}`).pipe(
-      catchError(this.handleError<Movie[]>('searchMovies', []))
-    );
+    return this.http.get<Movie>(url);
   }
 
   //////// Save methods //////////
 
   /** POST: add a new movie to the server */
-  addMovie (movie: Movie): Observable<Movie> {
-    return this.http.post<Movie>(this.moviesUrl, movie, httpOptions).pipe(
-      catchError(this.handleError<Movie>('addMovie'))
-    );
+  addMovie (movie: Movie): Promise<Movie|MovieError> {
+    return this.http.post<Movie>(this.moviesUrl, movie, httpOptions)
+      .toPromise()
+    .then(
+      (response) => response,
+      (error) => {
+        if (error.status === 422) {
+          throw error.error as MovieError;
+        } else {
+          console.log('Error adding movie', error);
+          throw {};
+        }
+      });
   }
 
   /** DELETE: delete the movie from the server */
@@ -94,7 +93,7 @@ export class MovieService {
       console.error(error); // log to console instead
 
       // Let the app keep running by returning an empty result.
-      return of(result as T);
+      return of(error.error as T);
     };
   }
 

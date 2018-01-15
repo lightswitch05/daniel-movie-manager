@@ -12,6 +12,7 @@ import {HomeComponent} from './home/home.component';
 import {MovieComponent} from './movies/movie/movie.component';
 import {MovieListComponent} from './movies/movie-list/movie-list.component';
 import {MovieService} from './movies/shared/movie.service';
+import { MovieFormComponent } from './movies/movie-form/movie-form.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {MovieService} from './movies/shared/movie.service';
     NavbarComponent,
     HomeComponent,
     MovieComponent,
-    MovieListComponent
+    MovieListComponent,
+    MovieFormComponent
   ],
   imports: [
     BrowserModule,
