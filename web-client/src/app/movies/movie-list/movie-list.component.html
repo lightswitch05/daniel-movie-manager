@@ -3,5 +3,12 @@
 <app-movie-form></app-movie-form>
 
 <div class="card-deck justify-content-center">
-  <app-movie *ngFor="let movie of movies" [movie]="movie"></app-movie>
+  <div *ngFor="let movie of movies">
+    <div class="movie-controls btn-group btn-group-sm">
+      <button type="button" class="btn btn-danger btn-sm" (click)="delete(movie)"> <i class="far fa-trash-alt text-right"></i></button>
+      <button type="button" class="btn btn-secondary btn-sm"> <i class="fas fa-edit"></i></button>
+    </div>
+
+    <app-movie [movie]="movie"></app-movie>
+  </div>
 </div>

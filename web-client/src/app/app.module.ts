@@ -13,6 +13,7 @@ import {MovieComponent} from './movies/movie/movie.component';
 import {MovieListComponent} from './movies/movie-list/movie-list.component';
 import {MovieService} from './movies/shared/movie.service';
 import { MovieFormComponent } from './movies/movie-form/movie-form.component';
+import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { MovieFormComponent } from './movies/movie-form/movie-form.component';
     HomeComponent,
     MovieComponent,
     MovieListComponent,
-    MovieFormComponent
+    MovieFormComponent,
+    ConfirmModalComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +32,7 @@ import { MovieFormComponent } from './movies/movie-form/movie-form.component';
     AppRoutingModule,
     HttpClientModule
   ],
+  entryComponents: [ConfirmModalComponent],
   providers: [MovieService],
   bootstrap: [AppComponent]
 })

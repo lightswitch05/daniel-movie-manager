@@ -26,5 +26,4 @@ export class MovieComponent implements OnInit {
   togglePoster() {
     this.fullPoster = !this.fullPoster;
   }
-
 }
