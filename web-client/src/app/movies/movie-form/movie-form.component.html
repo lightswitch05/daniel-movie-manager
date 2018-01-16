@@ -26,17 +26,22 @@
 
       <div class="form-group">
         <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <label class="input-group-text" for="formatInput">Format</label>
-          </div>
-          <select [(ngModel)]="movie.format" name="format" class="custom-select" id="formatInput" required>
-            <option disabled></option>
-            <option value="Streaming">Streaming</option>
-            <option value="DVD">DVD</option>
-            <option value="VHS">VHS</option>
-          </select>
-          <div *ngIf="apiErrors" class="invalid-feedback">
-            {{apiErrors.format}}
+          <label class="col-form-label" for="formatInput">Format</label>
+          <div class="col text-center">
+            <div class="btn-group btn-group-toggle" ngbRadioGroup name="format" [(ngModel)]="movie.format">
+              <label ngbButtonLabel class="btn btn-secondary">
+                <input ngbButton id="formatInput" type="radio" value="Streaming" required> Streaming
+              </label>
+              <label ngbButtonLabel class="btn btn-secondary">
+                <input ngbButton type="radio" value="DVD" required> DVD
+              </label>
+              <label ngbButtonLabel class="btn btn-secondary">
+                <input ngbButton type="radio" value="VHS" required> VHS
+              </label>
+            </div>
+            <div *ngIf="apiErrors" class="invalid-feedback d-inline-block">
+              {{apiErrors.format}}
+            </div>
           </div>
         </div>
       </div>
@@ -69,13 +74,14 @@
 
       <div class="form-group">
         <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <label class="input-group-text" for="ratingInput">Rating</label>
-          </div>
-          <input [(ngModel)]="movie.rating" name="rating" type="number" min="1" max="5" class="form-control"
-                 id="ratingInput" required>
-          <div *ngIf="apiErrors" class="invalid-feedback">
-            {{apiErrors.rating}}
+          <label class="col-form-label" for="ratingInput">Rating</label>
+          <!--<input [(ngModel)]="movie.rating" name="rating" type="number" min="1" max="5" class="form-control"-->
+                 <!--id="ratingInput" required>-->
+          <div class="col text-center">
+            <ngb-rating id="ratingInput" name="rating" class="movie-rating" [(rate)]="movie.rating" max="5" required></ngb-rating>
+            <div *ngIf="apiErrors" class="invalid-feedback d-inline-block">
+              {{apiErrors.rating}}
+            </div>
           </div>
         </div>
       </div>
