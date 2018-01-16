@@ -4,7 +4,7 @@
   "containerDefinitions": [
     {
       "name": "movie-api",
-      "image": "lightswitch05/movie-api:0.0.5",
+      "image": "lightswitch05/movie-api:0.0.7",
       "essential": true,
       "memory": 128,
       "mountPoints": [],
@@ -13,11 +13,12 @@
           "hostPort": 3000,
           "containerPort": 3000
         }
-      ]
+      ],
+      "environment": []
     },
     {
       "name": "web-client",
-      "image": "lightswitch05/web-client:0.0.5",
+      "image": "lightswitch05/web-client:0.0.7",
       "essential": true,
       "memory": 128,
       "portMappings": [
@@ -29,7 +30,8 @@
       "links": [
         "movie-api"
       ],
-      "mountPoints": []
+      "mountPoints": [],
+      "environment": []
     }
   ]
 }

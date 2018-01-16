@@ -1,4 +1,4 @@
-# Daniel's Movie Manager
+# [Daniel's Movie Manager](http://daniel-movie-manager.us-east-1.elasticbeanstalk.com/)
 
 [![Build Status](https://travis-ci.org/lightswitch05/daniel-movie-manager.svg?branch=master)](https://travis-ci.org/lightswitch05/daniel-movie-manager)
 
