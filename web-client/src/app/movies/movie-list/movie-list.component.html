@@ -1,14 +1,19 @@
-<h2>Daniel's Movies</h2>
+<button title="Add a movie" type="button" class="btn btn-primary btn-circle add-button" (click)="createMovie()">
+  <i class="fas fa-plus"></i>
+</button>
 
-<app-movie-form></app-movie-form>
+<div class="container-fluid">
+  <div class="card-deck movie-deck justify-content-center">
+    <div *ngFor="let movie of movies">
+      <div class="movie-controls btn-group btn-group-sm justify-content-end ml-sm-3 ml-md-3 ml-lg-3">
+        <button type="button" class="btn btn-danger btn-sm" (click)="deleteMovie(movie)"> <i class="far fa-trash-alt text-right"></i></button>
+        <button type="button" class="btn btn-secondary btn-sm" (click)="editMovie(movie)"> <i class="fas fa-edit"></i></button>
+      </div>
 
-<div class="card-deck justify-content-center">
-  <div *ngFor="let movie of movies">
-    <div class="movie-controls btn-group btn-group-sm">
-      <button type="button" class="btn btn-danger btn-sm" (click)="delete(movie)"> <i class="far fa-trash-alt text-right"></i></button>
-      <button type="button" class="btn btn-secondary btn-sm"> <i class="fas fa-edit"></i></button>
+      <app-movie [movie]="movie"></app-movie>
     </div>
-
-    <app-movie [movie]="movie"></app-movie>
   </div>
+  <p *ngIf="!movies || movies.length === 0" class="lead text-center">
+    Your movie collection is empty. Add moves by clicking the blue "+" button at the bottom right of your screen.
+  </p>
 </div>

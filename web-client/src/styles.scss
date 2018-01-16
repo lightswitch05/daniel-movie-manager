@@ -2,15 +2,22 @@
 @import "~bootstrap/scss/bootstrap";
 
 body {
-  padding-bottom: 100px;
+  //padding-bottom: 100px;
 }
 
 footer {
-  @extend .fixed-bottom;
+  margin-top: 20rem;
   background-color: $gray-100;
 
   .social-links a, .social-links a:hover {
     color: #000;
     text-decoration: none;
   }
+}
+
+
+.btn-circle {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
 }

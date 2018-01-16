@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Movie} from '../shared/movie';
 import {MovieService} from '../shared/movie.service';
 import {MovieError} from '../shared/movie-error';
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-movie-form',
@@ -9,34 +10,36 @@ import {MovieError} from '../shared/movie-error';
   styleUrls: ['./movie-form.component.scss']
 })
 export class MovieFormComponent implements OnInit {
-  newMovie: Movie = this.createNewMovie();
+  @Input() confirmationBoxTitle: string;
+  @Input() movie: Movie;
   apiErrors: MovieError = null;
 
-  constructor(private movieService: MovieService) { }
+  constructor(private movieService: MovieService,
+              public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
   }
 
-  add(movie: Movie): void {
-    this.movieService.addMovie(movie).then(
-      () => {
-        this.newMovie = new Movie();
-        this.apiErrors = null;
-      },
-      (errors) => {
-        this.apiErrors = errors as MovieError;
-      }
-    );
+  saveOrUpdateMovie(): void {
+    if (this.movie.id) {
+      this.movieService.updateMovie(this.movie).then(
+        (response) => this.handleResponse(response),
+        (error) => this.handleError(error)
+      );
+    } else {
+      this.movieService.addMovie(this.movie).then(
+        (response) => this.handleResponse(response),
+        (error) => this.handleError(error)
+      );
+    }
   }
 
-  private createNewMovie() {
-    return {
-      title: null,
-      format: null,
-      length: null,
-      release_year: null,
-      rating: null
-    };
+  handleResponse(response) {
+    this.activeModal.close(response);
+    this.apiErrors = null;
   }
 
+  handleError(errors) {
+    this.apiErrors = errors as MovieError;
+  }
 }

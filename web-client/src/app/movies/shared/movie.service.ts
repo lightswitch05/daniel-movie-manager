@@ -29,24 +29,6 @@ export class MovieService {
       );
   }
 
-  /** GET movie by id. Return `undefined` when id not found */
-  getMovieNo404<Data>(id: number): Observable<Movie> {
-    const url = `${this.moviesUrl}/?id=${id}`;
-    return this.http.get<Movie[]>(url)
-      .pipe(
-        map(movies => movies[0]), // returns a {0|1} element array
-        catchError(this.handleError<Movie>(`getMovie id=${id}`))
-      );
-  }
-
-  /** GET movie by id. Will 404 if id not found */
-  getMovie(id: number): Observable<Movie> {
-    const url = `${this.moviesUrl}/${id}`;
-    return this.http.get<Movie>(url);
-  }
-
-  //////// Save methods //////////
-
   /** POST: add a new movie to the server */
   addMovie (movie: Movie): Promise<Movie|MovieError> {
     return this.http.post<Movie>(this.moviesUrl, movie, httpOptions)
@@ -74,10 +56,9 @@ export class MovieService {
   }
 
   /** PUT: update the movie on the server */
-  updateMovie (movie: Movie): Observable<any> {
-    return this.http.put(this.moviesUrl, movie, httpOptions).pipe(
-      catchError(this.handleError<any>('updateMovie'))
-    );
+  updateMovie (movie: Movie): Promise<Movie|MovieError> {
+    const updateUrl = `${this.moviesUrl}/${movie.id}`;
+    return this.http.put(updateUrl, movie, httpOptions).toPromise();
   }
 
   /**

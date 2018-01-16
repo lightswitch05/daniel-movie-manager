@@ -3,6 +3,7 @@ import {Movie} from '../shared/movie';
 import {MovieService} from '../shared/movie.service';
 import {ConfirmModalComponent} from '../../confirm-modal/confirm-modal.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {MovieFormComponent} from '../movie-form/movie-form.component';
 
 @Component({
   selector: 'app-movie-list',
@@ -22,9 +23,10 @@ export class MovieListComponent implements OnInit {
   getMovies(): void {
     this.movieService.getMovies()
       .subscribe(movies => this.movies = movies);
+      //.subscribe();
   }
 
-  delete(movie) {
+  deleteMovie(movie) {
     const modalRef = this.modalService.open(ConfirmModalComponent);
     modalRef.componentInstance.isDelete = true;
     modalRef.componentInstance.confirmationBoxTitle = 'Delete?';
@@ -35,6 +37,32 @@ export class MovieListComponent implements OnInit {
         this.movies = this.movies.filter(mov => mov !== movie);
         this.movieService.deleteMovie(movie).toPromise();
       }
+    });
+  }
+
+  createMovie() {
+    const modalRef = this.modalService.open(MovieFormComponent);
+    modalRef.componentInstance.movie = {
+      title: null,
+      format: null,
+      length: null,
+      release_year: null,
+      rating: null
+    };
+
+    modalRef.result.then((newMovie) => {
+      if (newMovie) {
+        this.movies.unshift(newMovie);
+      }
+    });
+  }
+
+  editMovie(movie) {
+    const modalRef = this.modalService.open(MovieFormComponent);
+    modalRef.componentInstance.movie = Object.assign({}, movie);
+
+    modalRef.result.then((updatedMovie) => {
+      Object.assign(movie, updatedMovie);
     });
   }
 

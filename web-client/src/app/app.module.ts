@@ -32,7 +32,7 @@ import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
     AppRoutingModule,
     HttpClientModule
   ],
-  entryComponents: [ConfirmModalComponent],
+  entryComponents: [ConfirmModalComponent, MovieFormComponent],
   providers: [MovieService],
   bootstrap: [AppComponent]
 })

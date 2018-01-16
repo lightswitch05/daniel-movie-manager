@@ -1,72 +1,91 @@
-<div class="container">
-  <form (ngSubmit)="add(newMovie)" [ngClass]="{'was-validated': apiErrors}">
-
-    <div class="form-group">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <label class="input-group-text" for="titleInput">Title</label>
-        </div>
-        <input [(ngModel)]="newMovie.title" name="title" type="text" class="form-control" id="titleInput" maxlength="50" required>
-        <div *ngIf="apiErrors" class="invalid-feedback">
-          {{apiErrors.title}}
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <label class="input-group-text" for="formatInput">Format</label>
-        </div>
-        <select [(ngModel)]="newMovie.format" name="format" class="custom-select" id="formatInput" required>
-          <option disabled></option>
-          <option value="Streaming">Streaming</option>
-          <option value="DVD">DVD</option>
-          <option value="VHS">VHS</option>
-        </select>
-        <div *ngIf="apiErrors" class="invalid-feedback">
-          {{apiErrors.format}}
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <label class="input-group-text" for="lengthInput">Length</label>
-        </div>
-        <input [(ngModel)]="newMovie.length" name="length" type="number" class="form-control" id="lengthInput" required>
-        <div *ngIf="apiErrors" class="invalid-feedback">
-          {{apiErrors.length}}
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <label class="input-group-text" for="releaseYearInput">Release Year</label>
-        </div>
-        <input [(ngModel)]="newMovie.release_year" name="release_year" type="number" min="1801" max="2099" class="form-control" id="releaseYearInput" required>
-        <div *ngIf="apiErrors" class="invalid-feedback">
-          {{apiErrors.release_year}}
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <label class="input-group-text" for="ratingInput">Rating</label>
-        </div>
-        <input [(ngModel)]="newMovie.rating" name="rating" type="number" min="1" max="5" class="form-control" id="ratingInput" required>
-        <div *ngIf="apiErrors" class="invalid-feedback">
-          {{apiErrors.rating}}
-        </div>
-      </div>
-    </div>
-
-    <button type="submit" class="btn btn-success">Add</button>
-
-  </form>
+<div class="modal-header">
+  <h4 class="modal-title">
+    <span *ngIf="movie.id">Edit movie</span>
+    <span *ngIf="!movie.id">Add movie</span>
+  </h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>
+<form (ngSubmit)="saveOrUpdateMovie(movie)" [ngClass]="{'was-validated': apiErrors}">
+  <div class="modal-body">
+    <div class="container">
+
+      <div class="form-group">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="titleInput">Title</label>
+          </div>
+          <input [(ngModel)]="movie.title" name="title" type="text" class="form-control" id="titleInput"
+                 maxlength="50" required>
+          <div *ngIf="apiErrors" class="invalid-feedback">
+            {{apiErrors.title}}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="formatInput">Format</label>
+          </div>
+          <select [(ngModel)]="movie.format" name="format" class="custom-select" id="formatInput" required>
+            <option disabled></option>
+            <option value="Streaming">Streaming</option>
+            <option value="DVD">DVD</option>
+            <option value="VHS">VHS</option>
+          </select>
+          <div *ngIf="apiErrors" class="invalid-feedback">
+            {{apiErrors.format}}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="lengthInput">Length</label>
+          </div>
+          <input [(ngModel)]="movie.length" name="length" type="number" class="form-control" id="lengthInput"
+                 required>
+          <div *ngIf="apiErrors" class="invalid-feedback">
+            {{apiErrors.length}}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="releaseYearInput">Release Year</label>
+          </div>
+          <input [(ngModel)]="movie.release_year" name="release_year" type="number" min="1801" max="2099"
+                 class="form-control" id="releaseYearInput" required>
+          <div *ngIf="apiErrors" class="invalid-feedback">
+            {{apiErrors.release_year}}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="ratingInput">Rating</label>
+          </div>
+          <input [(ngModel)]="movie.rating" name="rating" type="number" min="1" max="5" class="form-control"
+                 id="ratingInput" required>
+          <div *ngIf="apiErrors" class="invalid-feedback">
+            {{apiErrors.rating}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="activeModal.dismiss()">Cancel</button>
+    <button type="submit" class="btn btn-success">
+      <span *ngIf="movie.id">Update</span>
+      <span *ngIf="!movie.id">Create</span>
+    </button>
+  </div>
+</form>

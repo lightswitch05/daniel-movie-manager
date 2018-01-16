@@ -1,8 +1,4 @@
-<div class="card movie-card" style="width: 18rem;">
-  <!--<div class="movie-controls btn-group btn-group-sm">
-    <button type="button" class="btn btn-danger btn-sm" (click)="delete()"> <i class="far fa-trash-alt text-right"></i></button>
-    <button type="button" class="btn btn-secondary btn-sm"> <i class="fas fa-edit"></i></button>
-  </div>-->
+<div class="card movie-card">
   <img class="card-img-top" [src]="movie.poster || 'assets/missing-poster.png'" alt="Move poster" (click)="togglePoster()">
   <div class="card-img-overlay" [ngClass]="{'full-poster': fullPoster}">
     <h5 class="card-title">{{movie.title}}</h5>
