@@ -23,7 +23,6 @@ export class MovieListComponent implements OnInit {
   getMovies(): void {
     this.movieService.getMovies()
       .subscribe(movies => this.movies = movies);
-      //.subscribe();
   }
 
   deleteMovie(movie) {

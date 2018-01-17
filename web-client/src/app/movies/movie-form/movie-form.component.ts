@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Movie} from '../shared/movie';
 import {MovieService} from '../shared/movie.service';
 import {MovieError} from '../shared/movie-error';
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-movie-form',
