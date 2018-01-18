@@ -12,16 +12,45 @@ import {MovieFormComponent} from '../movie-form/movie-form.component';
 })
 export class MovieListComponent implements OnInit {
   movies: Movie[];
+  sortType: string;
+  sortByAttribute: {
+    column: string,
+    name: string
+  };
+  sortableAttributes = [
+    {
+      column: 'title',
+      name: 'Title'
+    },
+    {
+      column: 'release_year',
+      name: 'Release Year'
+    },
+    {
+      column: 'format',
+      name: 'Format'
+    },
+    {
+      column: 'length',
+      name: 'Length'
+    },
+    {
+      column: 'rating',
+      name: 'Rating'
+    }
+  ];
 
   constructor(private movieService: MovieService,
               private modalService: NgbModal) { }
 
   ngOnInit() {
+    this.sortByAttribute = this.sortableAttributes[0];
+    this.sortType = 'asc';
     this.getMovies();
   }
 
   getMovies(): void {
-    this.movieService.getMovies()
+    this.movieService.getMovies(this.sortByAttribute.column, this.sortType)
       .subscribe(movies => this.movies = movies);
   }
 
@@ -63,6 +92,16 @@ export class MovieListComponent implements OnInit {
     modalRef.result.then((updatedMovie) => {
       Object.assign(movie, updatedMovie);
     });
+  }
+
+  setSortBy(sortBy) {
+    this.sortByAttribute = sortBy;
+    this.getMovies();
+  }
+
+  setSortType(sortType) {
+    this.sortType = sortType;
+    this.getMovies();
   }
 
 }

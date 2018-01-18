@@ -3,11 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 import { Movie } from './movie';
 import { MovieError } from './movie-error';
-import apply = Reflect.apply;
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -22,8 +21,12 @@ export class MovieService {
   constructor(private http: HttpClient) { }
 
   /** GET movies from the server */
-  getMovies (): Observable<Movie[]> {
-    return this.http.get<Movie[]>(this.moviesUrl)
+  getMovies (sortBy: string, sortType: string): Observable<Movie[]> {
+    const params = {
+      sort_by: sortBy,
+      sort_type: sortType
+    };
+    return this.http.get<Movie[]>(this.moviesUrl, { params: params })
       .pipe(
         catchError(this.handleError('getMovies', []))
       );

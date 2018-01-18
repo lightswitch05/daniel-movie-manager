@@ -2,12 +2,57 @@
   <i class="fas fa-plus"></i>
 </button>
 
+<h1 class="display-4">Daniel's Movies</h1>
+<div class="col">
+  <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+    <div class="btn-group" role="group">
+      <div ngbDropdown class="d-inline-block">
+        <button class="btn btn-outline-primary" id="sortBySelect" ngbDropdownToggle>Sort by {{sortByAttribute.name}}
+        </button>
+        <div ngbDropdownMenu aria-labelledby="sortBySelect">
+          <ng-container *ngFor="let attribute of sortableAttributes">
+            <button *ngIf="attribute.column !== sortByAttribute.column"
+                    (click)="setSortBy(attribute)"
+                    class="dropdown-item">
+              {{attribute.name}}
+            </button>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-group" role="group">
+      <div ngbDropdown class="d-inline-block">
+        <button class="btn btn-outline-primary" id="sortTypeSelect" ngbDropdownToggle>
+          <span *ngIf="sortType === 'asc'">asc <i class="fas fa-sort-alpha-down"></i></span>
+          <span *ngIf="sortType === 'desc'">desc <i class="fas fa-sort-alpha-up"></i></span>
+        </button>
+        <div ngbDropdownMenu aria-labelledby="sortTypeSelect">
+          <button *ngIf="sortType !== 'asc'"
+                  (click)="setSortType('asc')"
+                  class="dropdown-item">
+            asc <i class="fas fa-sort-alpha-down"></i>
+          </button>
+          <button *ngIf="sortType !== 'desc'"
+                  (click)="setSortType('desc')"
+                  class="dropdown-item">
+            desc <i class="fas fa-sort-alpha-up"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="container-fluid">
   <div class="card-deck movie-deck justify-content-center">
-    <div *ngFor="let movie of movies">
+    <div class="movie-container justify-content-center" *ngFor="let movie of movies">
       <div class="movie-controls btn-group btn-group-sm justify-content-end ml-sm-3 ml-md-3 ml-lg-3">
-        <button type="button" class="btn btn-danger btn-sm" (click)="deleteMovie(movie)"> <i class="far fa-trash-alt text-right"></i></button>
-        <button type="button" class="btn btn-secondary btn-sm" (click)="editMovie(movie)"> <i class="fas fa-edit"></i></button>
+        <button type="button" class="btn btn-danger btn-sm" (click)="deleteMovie(movie)"><i
+          class="far fa-trash-alt text-right"></i></button>
+        <button type="button" class="btn btn-secondary btn-sm" (click)="editMovie(movie)"><i class="fas fa-edit"></i>
+        </button>
       </div>
 
       <app-movie [movie]="movie"></app-movie>
