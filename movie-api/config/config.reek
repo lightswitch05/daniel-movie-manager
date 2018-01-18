@@ -4,3 +4,9 @@ IrresponsibleModule:
 
 FeatureEnvy:
   enabled: false
+
+TooManyStatements:
+  enabled: false
+
+DuplicateMethodCall:
+  enabled: false
