@@ -5,7 +5,7 @@ class OpenMovieDb
   end
 
   def self.fetch(movie)
-    return nil if !movie || !movie.valid?
+    return {} if !movie || !movie.valid?
     api_key = Rails.application.secrets.omdb_api_key
     begin
       response = Faraday.get 'https://www.omdbapi.com', apikey: api_key, t: movie.title, y: movie.release_year
