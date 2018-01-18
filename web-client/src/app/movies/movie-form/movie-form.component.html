@@ -55,6 +55,9 @@
                  max="499"
                  min="1"
                  required>
+          <div class="input-group-append">
+            <span class="input-group-text" id="basic-addon2">minutes</span>
+          </div>
           <div *ngIf="apiErrors && apiErrors.length" class="invalid-feedback">
             {{apiErrors.length}}
           </div>
