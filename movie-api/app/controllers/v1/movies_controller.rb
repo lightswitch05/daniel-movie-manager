@@ -1,6 +1,7 @@
 class V1::MoviesController < ApplicationController
   def create
     movie = Movie.new(create_movie_params)
+    movie.poster = OpenMovieDb.poster(movie)
     if movie.save
       render json: movie, status: :created
     else
@@ -10,7 +11,9 @@ class V1::MoviesController < ApplicationController
 
   def update
     movie = Movie.find(params[:id])
-    if movie.update(update_movie_params)
+    movie.assign_attributes(update_movie_params)
+    movie.poster = OpenMovieDb.poster(movie) if movie.title_changed? || movie.release_year_changed?
+    if movie.save
       render json: movie
     else
       render_errors(movie)

@@ -134,6 +134,30 @@ class MovieTest < ActiveSupport::TestCase
     assert_not movie.save
   end
 
+  test 'should allow poster to be nil' do
+    movie = get_valid_movie
+    movie.poster = nil
+    assert movie.save
+  end
+
+  test 'should allow poster to be an http url' do
+    movie = get_valid_movie
+    movie.poster = 'http://example.com/images/test.png'
+    assert movie.save
+  end
+
+  test 'should allow poster to be an https url' do
+    movie = get_valid_movie
+    movie.poster = 'https://example.com/images/test.png'
+    assert movie.save
+  end
+
+  test 'should not allow poster to be a non-url format' do
+    movie = get_valid_movie
+    movie.poster = 'not-a-url.com'
+    assert_not movie.save
+  end
+
   def get_valid_movie
     movie = Movie.new
     movie.title = 'test movie'
@@ -141,6 +165,7 @@ class MovieTest < ActiveSupport::TestCase
     movie.length = 300
     movie.release_year = 2018
     movie.rating = 5
+    movie.poster = 'https://example.com/poster'
     return movie
   end
 end
