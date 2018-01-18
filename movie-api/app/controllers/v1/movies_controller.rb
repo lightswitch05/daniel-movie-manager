@@ -1,3 +1,8 @@
+VALID_SORT_BYS = %w[title format length release_year rating].freeze
+VALID_SORT_TYPE = %w[asc desc].freeze
+DEFAULT_SORT_BY = 'title'.freeze
+DEFAULT_SORT_TYPE = 'asc'.freeze
+
 class V1::MoviesController < ApplicationController
   def create
     movie = Movie.new(create_movie_params)
@@ -26,7 +31,7 @@ class V1::MoviesController < ApplicationController
   end
 
   def index
-    movies = Movie.all
+    movies = Movie.all.order(sort_key)
     render json: movies
   end
 
@@ -49,5 +54,15 @@ class V1::MoviesController < ApplicationController
   # Force required Movie params for +update+
   def update_movie_params
     params.require(:movie).permit(:title, :format, :length, :release_year, :rating)
+  end
+
+  def sort_key
+    sort_by = params.fetch(:sort_by, DEFAULT_SORT_BY)
+    sort_type = params.fetch(:sort_type, DEFAULT_SORT_TYPE)
+
+    sort_by = DEFAULT_SORT_BY if VALID_SORT_BYS.exclude?(sort_by)
+    sort_type = DEFAULT_SORT_TYPE if VALID_SORT_TYPE.exclude?(sort_type)
+
+    "#{sort_by} #{sort_type}"
   end
 end
