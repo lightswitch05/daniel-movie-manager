@@ -16,9 +16,9 @@ class OpenMovieDb
   end
 
   def self.parse_response(response)
-    return nil if !response || response.status != 200
+    return {} if !response || response.status != 200
     begin
-      JSON.parse(response.body)
+      JSON.parse(response.body) || {}
     rescue JSON::ParserError
       {}
     end
