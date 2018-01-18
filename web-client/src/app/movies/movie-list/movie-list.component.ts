@@ -13,6 +13,7 @@ import {MovieFormComponent} from '../movie-form/movie-form.component';
 export class MovieListComponent implements OnInit {
   movies: Movie[];
   sortType: string;
+  modalOpen: boolean;
   sortByAttribute: {
     column: string,
     name: string
@@ -46,6 +47,8 @@ export class MovieListComponent implements OnInit {
   ngOnInit() {
     this.sortByAttribute = this.sortableAttributes[0];
     this.sortType = 'asc';
+    this.movies = [];
+    this.modalOpen = false;
     this.getMovies();
   }
 
@@ -69,6 +72,7 @@ export class MovieListComponent implements OnInit {
   }
 
   createMovie() {
+    this.modalOpen = true;
     const modalRef = this.modalService.open(MovieFormComponent);
     modalRef.componentInstance.movie = {
       title: null,
@@ -79,18 +83,27 @@ export class MovieListComponent implements OnInit {
     };
 
     modalRef.result.then((newMovie) => {
+      this.modalOpen = false;
       if (newMovie) {
         this.movies.unshift(newMovie);
       }
+    }).catch(() => {
+      this.modalOpen = false;
     });
   }
 
   editMovie(movie) {
+    this.modalOpen = true;
     const modalRef = this.modalService.open(MovieFormComponent);
     modalRef.componentInstance.movie = Object.assign({}, movie);
 
     modalRef.result.then((updatedMovie) => {
-      Object.assign(movie, updatedMovie);
+      this.modalOpen = false;
+      if (updatedMovie) {
+        Object.assign(movie, updatedMovie);
+      }
+    }).catch(() => {
+      this.modalOpen = false;
     });
   }
 

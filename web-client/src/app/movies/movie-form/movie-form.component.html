@@ -18,7 +18,7 @@
           </div>
           <input [(ngModel)]="movie.title" name="title" type="text" class="form-control" id="titleInput"
                  maxlength="50" required>
-          <div *ngIf="apiErrors" class="invalid-feedback">
+          <div *ngIf="apiErrors && apiErrors.title" class="invalid-feedback">
             {{apiErrors.title}}
           </div>
         </div>
@@ -39,7 +39,7 @@
                 <input ngbButton type="radio" value="VHS" required> VHS
               </label>
             </div>
-            <div *ngIf="apiErrors" class="invalid-feedback d-inline-block">
+            <div *ngIf="apiErrors && apiErrors.format" class="invalid-feedback d-inline-block">
               {{apiErrors.format}}
             </div>
           </div>
@@ -52,8 +52,10 @@
             <label class="input-group-text" for="lengthInput">Length</label>
           </div>
           <input [(ngModel)]="movie.length" name="length" type="number" class="form-control" id="lengthInput"
+                 max="499"
+                 min="1"
                  required>
-          <div *ngIf="apiErrors" class="invalid-feedback">
+          <div *ngIf="apiErrors && apiErrors.length" class="invalid-feedback">
             {{apiErrors.length}}
           </div>
         </div>
@@ -66,7 +68,7 @@
           </div>
           <input [(ngModel)]="movie.release_year" name="release_year" type="number" min="1801" max="2099"
                  class="form-control" id="releaseYearInput" required>
-          <div *ngIf="apiErrors" class="invalid-feedback">
+          <div *ngIf="apiErrors && apiErrors.release_year" class="invalid-feedback">
             {{apiErrors.release_year}}
           </div>
         </div>
@@ -79,7 +81,7 @@
                  <!--id="ratingInput" required>-->
           <div class="col text-center">
             <ngb-rating id="ratingInput" name="rating" class="movie-rating" [(rate)]="movie.rating" max="5" required></ngb-rating>
-            <div *ngIf="apiErrors" class="invalid-feedback d-inline-block">
+            <div *ngIf="apiErrors && apiErrors.rating" class="invalid-feedback d-inline-block">
               {{apiErrors.rating}}
             </div>
           </div>
