@@ -21,3 +21,9 @@ footer {
   width: 60px;
   border-radius: 50%;
 }
+
+.modal-open {
+  // iOS 11 Safari bootstrap modal text area outside of cursor
+  // https://stackoverflow.com/q/46339063/912563
+  position: fixed;
+}
