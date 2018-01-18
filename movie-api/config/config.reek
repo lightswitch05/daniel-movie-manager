@@ -1,3 +1,6 @@
 ---
 IrresponsibleModule:
   enabled: false
+
+FeatureEnvy:
+  enabled: false
