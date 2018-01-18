@@ -89,9 +89,8 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-default" (click)="activeModal.dismiss()">Cancel</button>
-    <button type="submit" class="btn btn-success">
-      <span *ngIf="movie.id">Update</span>
-      <span *ngIf="!movie.id">Create</span>
+    <button type="submit" class="btn btn-success" [disabled]="isSaving">
+      <span>{{action()}}</span>
     </button>
   </div>
 </form>
