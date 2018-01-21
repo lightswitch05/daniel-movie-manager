@@ -5,6 +5,7 @@ import {HttpClientModule} from '@angular/common/http';
 
 import {AppRoutingModule} from './app-routing.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import {AppComponent} from './app.component';
 import {NavbarComponent} from './navbar/navbar.component';
@@ -30,7 +31,8 @@ import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
     FormsModule,
     NgbModule.forRoot(),
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    InfiniteScrollModule
   ],
   entryComponents: [ConfirmModalComponent, MovieFormComponent],
   providers: [MovieService],
