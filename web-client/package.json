@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host=0.0.0.0 --proxy-config proxy.conf.json",
-    "build": "ng build --prod",
+    "start": "ng serve --host=0.0.0.0 --proxy-config proxy.conf.json --aot=true",
+    "build": "ng build --prod --aot=true",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
