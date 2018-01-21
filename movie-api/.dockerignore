@@ -2,6 +2,7 @@ log/*
 tmp/*
 test/*
 docs
+coverage
 .gitignore
 Dockerfile
 README.md

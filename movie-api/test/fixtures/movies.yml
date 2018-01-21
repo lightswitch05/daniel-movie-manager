@@ -1,6 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   title: Bill and Ted's Most Excellent Adventure
   format: VHS
   length: 90
@@ -8,6 +9,7 @@ one:
   rating: 5
 
 two:
+  id: 2
   title: It
   format: DVD
   length: 135
@@ -15,6 +17,7 @@ two:
   rating: 4
 
 three:
+  id: 3
   title: It
   format: VHS
   length: 192
