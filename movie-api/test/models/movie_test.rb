@@ -158,6 +158,12 @@ class MovieTest < ActiveSupport::TestCase
     assert_not movie.save
   end
 
+  test 'should remove trailing and leading whitespace from titles' do
+    movie = get_valid_movie
+    movie.title = '   A movie with whitespace   '
+    assert_equal'A movie with whitespace', movie.title
+  end
+
   def get_valid_movie
     movie = Movie.new
     movie.title = 'test movie'

@@ -13,4 +13,10 @@ class Movie < ApplicationRecord
   validates :poster,
             allow_nil: true,
             format: { with: URI.regexp(%w[http https nil]) }
+
+  def title=(value)
+    # Remove leading and trailing whitespace
+    value = value.strip unless value.nil?
+    super(value)
+  end
 end
