@@ -1,7 +1,8 @@
 class OpenMovieDb
   def self.poster(movie)
     matching_movie = fetch(movie)
-    matching_movie.fetch('Poster', nil)
+    poster = matching_movie.fetch('Poster', nil)
+    return poster if URI.regexp(%w[http https nil]).match?(poster)
   end
 
   def self.fetch(movie)
