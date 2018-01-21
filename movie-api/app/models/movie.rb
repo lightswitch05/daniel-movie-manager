@@ -16,7 +16,7 @@ class Movie < ApplicationRecord
 
   def title=(value)
     # Remove leading and trailing whitespace
-    value = value.strip unless value.nil?
+    value = value.strip if value
     super(value)
   end
 end
