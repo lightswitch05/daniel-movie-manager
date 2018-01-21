@@ -18,6 +18,7 @@ export class MovieListComponent implements OnInit {
   currentPage: number;
   maxPage: number;
   loadingPage: boolean;
+  errorMessage: string;
   sortByAttribute: {
     column: string,
     name: string
@@ -49,6 +50,7 @@ export class MovieListComponent implements OnInit {
               private modalService: NgbModal) { }
 
   ngOnInit() {
+    this.errorMessage = null;
     this.maxPage = 1;
     this.perPage = 25;
     this.sortByAttribute = this.sortableAttributes[0];
@@ -70,6 +72,10 @@ export class MovieListComponent implements OnInit {
         const totalCount = parseInt(movieResponse.headers.get('X-Pagination-Count'), 10);
         this.maxPage = Math.ceil(totalCount / this.perPage);
         this.movies = this.movies.concat(movieResponse.body);
+      })
+      .catch((error) => {
+        this.loadingPage = false;
+        this.errorMessage = error.message;
       });
   }
 
