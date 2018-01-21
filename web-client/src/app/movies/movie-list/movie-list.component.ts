@@ -14,6 +14,10 @@ export class MovieListComponent implements OnInit {
   movies: Movie[];
   sortType: string;
   modalOpen: boolean;
+  perPage: number;
+  currentPage: number;
+  maxPage: number;
+  loadingPage: boolean;
   sortByAttribute: {
     column: string,
     name: string
@@ -45,16 +49,28 @@ export class MovieListComponent implements OnInit {
               private modalService: NgbModal) { }
 
   ngOnInit() {
+    this.maxPage = 1;
+    this.perPage = 25;
     this.sortByAttribute = this.sortableAttributes[0];
     this.sortType = 'asc';
     this.movies = [];
     this.modalOpen = false;
-    this.getMovies();
+    this.getMovies(1);
   }
 
-  getMovies(): void {
-    this.movieService.getMovies(this.sortByAttribute.column, this.sortType)
-      .subscribe(movies => this.movies = movies);
+  getMovies(page): void {
+    this.loadingPage = true;
+    this.currentPage = page;
+    this.movieService.getMovies(page, this.perPage,  this.sortByAttribute.column, this.sortType)
+      .then((movieResponse) => {
+        this.loadingPage = false;
+        if (movieResponse.headers.get('X-Pagination-Page') === '1') {
+          this.movies = [];
+        }
+        const totalCount = parseInt(movieResponse.headers.get('X-Pagination-Count'), 10);
+        this.maxPage = Math.ceil(totalCount / this.perPage);
+        this.movies = this.movies.concat(movieResponse.body);
+      });
   }
 
   deleteMovie(movie) {
@@ -109,12 +125,18 @@ export class MovieListComponent implements OnInit {
 
   setSortBy(sortBy) {
     this.sortByAttribute = sortBy;
-    this.getMovies();
+    this.getMovies(1);
   }
 
   setSortType(sortType) {
     this.sortType = sortType;
-    this.getMovies();
+    this.getMovies(1);
+  }
+
+  onScroll() {
+    if (this.currentPage < this.maxPage) {
+      this.getMovies(this.currentPage + 1);
+    }
   }
 
 }

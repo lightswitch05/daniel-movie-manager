@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
@@ -21,31 +21,31 @@ export class MovieService {
   constructor(private http: HttpClient) { }
 
   /** GET movies from the server */
-  getMovies (sortBy: string, sortType: string): Observable<Movie[]> {
+  getMovies (page: number, perPage: number, sortBy: string, sortType: string): Promise<HttpResponse<Movie[]>> {
     const params = {
+      page: page.toString(),
+      per_page: perPage.toString(),
       sort_by: sortBy,
       sort_type: sortType
     };
-    return this.http.get<Movie[]>(this.moviesUrl, { params: params })
-      .pipe(
-        catchError(this.handleError('getMovies', []))
-      );
+    return this.http.get<Movie[]>(this.moviesUrl, { params: params, observe: 'response' })
+      .toPromise();
   }
 
   /** POST: add a new movie to the server */
   addMovie (movie: Movie): Promise<Movie|MovieError> {
     return this.http.post<Movie>(this.moviesUrl, movie, httpOptions)
       .toPromise()
-    .then(
-      (response) => response,
-      (error) => {
-        if (error.status === 422) {
-          throw error.error as MovieError;
-        } else {
-          console.log('Error adding movie', error);
-          throw {};
-        }
-      });
+      .then(
+        (response) => response,
+        (error) => {
+          if (error.status === 422) {
+            throw error.error as MovieError;
+          } else {
+            console.log('Error adding movie', error);
+            throw {};
+          }
+        });
   }
 
   /** DELETE: delete the movie from the server */
