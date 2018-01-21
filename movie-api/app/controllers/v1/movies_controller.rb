@@ -31,7 +31,10 @@ class V1::MoviesController < ApplicationController
   end
 
   def index
-    movies = Movie.all.order(sort_key)
+    movies = Movie.order(sort_key).page(params[:page]).per(params[:per_page])
+    response.headers['X-Pagination-Page'] = movies.current_page
+    response.headers['X-Pagination-Per-Page'] = movies.limit_value
+    response.headers['x-Pagination-Count'] = movies.total_count
     render json: movies
   end
 
