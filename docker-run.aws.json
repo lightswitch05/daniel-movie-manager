@@ -4,7 +4,7 @@
   "containerDefinitions": [
     {
       "name": "movie-api",
-      "image": "lightswitch05/movie-api:1.1.6",
+      "image": "lightswitch05/movie-api:1.1.7",
       "essential": true,
       "memory": 128,
       "mountPoints": [],
@@ -18,7 +18,7 @@
     },
     {
       "name": "web-client",
-      "image": "lightswitch05/web-client:1.1.6",
+      "image": "lightswitch05/web-client:1.1.7",
       "essential": true,
       "memory": 128,
       "portMappings": [
