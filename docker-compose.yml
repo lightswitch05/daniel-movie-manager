@@ -20,6 +20,7 @@ services:
   bundle:
     <<: *common-args-dev
     entrypoint: bundle
+    command: install
 
   rails:
     <<: *common-args-dev
@@ -31,6 +32,16 @@ services:
   rake:
     <<: *common-args-dev
     entrypoint: bin/rake
+    environment:
+      DEV_DB_PASSWORD: ${ROOT_DB_PASSWORD}
+      TEST_DB_PASSWORD: ${ROOT_DB_PASSWORD}
+
+  test:
+    <<: *common-args-dev
+    entrypoint: bin/rake
+    depends_on:
+      - db
+    command: test
     environment:
       DEV_DB_PASSWORD: ${ROOT_DB_PASSWORD}
       TEST_DB_PASSWORD: ${ROOT_DB_PASSWORD}
@@ -61,7 +72,5 @@ services:
       POSTGRES_PASSWORD: ${ROOT_DB_PASSWORD}
     volumes:
       - ./db/data:/var/lib/postgresql/data
-      - ./db/init-sql:/docker-entrypoint-initdb.d
-      - ./db/backups:/var/backups
     ports:
       - 8898:5432

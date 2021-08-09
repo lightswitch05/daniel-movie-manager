@@ -3,7 +3,9 @@ name: Tests
 on:
   push:
     branches:
+      - master
   pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   build:
@@ -21,11 +23,16 @@ jobs:
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: ${{ runner.os }}-gems-
 
-      - name: Install dependencies
-        run: docker-compose run --rm bundle install
+      - name: Setup
+        run: |
+          docker-compose pull db &
+          docker-compose up bundle
 
       - name: Run Tests
         run: |
           docker-compose up -d db
-          sleep 10
+          docker-compose logs -f db &
+          sleep 120
           docker-compose run --rm rails test
+        env:
+          ROOT_DB_PASSWORD: ${{ secrets.ROOT_DB_PASSWORD }}
