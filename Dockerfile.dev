@@ -1,0 +1,6 @@
+FROM ruby:3.0-slim-buster
+
+ENV EDITOR=nano
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y sqlite3 build-essential libpq-dev nano \
+    && rm -rf /var/lib/apt/lists/*

@@ -12,6 +12,8 @@ A demo application for storing a movie collection.
 
   Ruby on Rails app for RESTful APIs.
 
+  Setup: `docker-compose run --rm rails new . --api --skip-javascript --skip-turbolinks --skip-action-mailbox --skip-active-job --skip-action-text --skip-sprockets --database=postgresql --skip-action-mailer`
+
 ## [Web Client](./web-client/README.md)
 
   Angular web app.
