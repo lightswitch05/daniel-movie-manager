@@ -8,6 +8,8 @@ class OpenMovieDb
   private
 
     def self.get_movie(movie)
+      Rails.logger.error "Keys: #{Rails.application.credentials.dig(:omdb_api_key)}"
+
       return {} if !movie || !movie.valid?
       begin
         response = Faraday.get do |req|
@@ -28,10 +30,14 @@ class OpenMovieDb
     end
 
     def self.parse_response(response)
-      return {} if !response || response.status != 200
+      if !response || response.status != 200
+        Rails.logger.warn "Failed OMDB API Response: #{response.body}"
+        return {}
+      end
       begin
         JSON.parse(response.body) || {}
-      rescue JSON::ParserError
+      rescue JSON::ParserError => error
+        Rails.logger.warn "Error parsing OMDB API Response: #{error}"
         {}
       end
     end

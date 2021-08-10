@@ -1,9 +1,17 @@
 version: '3.7'
 
-x-common-args-dev: &common-args-dev
+x-common-web-dev: &common-web-dev
   build:
     context: .
-    dockerfile: Dockerfile.dev
+    dockerfile: Dockerfile.web-dev
+  volumes:
+    - "./web-client:/opt/web-client"
+  working_dir: /opt/web-client
+
+x-common-api-dev: &common-api-dev
+  build:
+    context: .
+    dockerfile: Dockerfile.api-dev
   volumes:
     - "./movie-api:/opt/movie-api"
     - "./.tmp/movie-api/bundle:/usr/local/bundle"
@@ -11,33 +19,33 @@ x-common-args-dev: &common-args-dev
 
 services:
   ruby:
-    <<: *common-args-dev
+    <<: *common-api-dev
 
   gem:
-    <<: *common-args-dev
+    <<: *common-api-dev
     entrypoint: gem
 
   bundle:
-    <<: *common-args-dev
+    <<: *common-api-dev
     entrypoint: bundle
     command: install
 
   rails:
-    <<: *common-args-dev
+    <<: *common-api-dev
     entrypoint: rails
     environment:
       DEV_DB_PASSWORD: ${ROOT_DB_PASSWORD}
       TEST_DB_PASSWORD: ${ROOT_DB_PASSWORD}
 
   rake:
-    <<: *common-args-dev
+    <<: *common-api-dev
     entrypoint: bin/rake
     environment:
       DEV_DB_PASSWORD: ${ROOT_DB_PASSWORD}
       TEST_DB_PASSWORD: ${ROOT_DB_PASSWORD}
 
   test:
-    <<: *common-args-dev
+    <<: *common-api-dev
     entrypoint: bin/rake
     depends_on:
       - db
@@ -46,8 +54,9 @@ services:
       DEV_DB_PASSWORD: ${ROOT_DB_PASSWORD}
       TEST_DB_PASSWORD: ${ROOT_DB_PASSWORD}
 
-  serve:
-    <<: *common-args-dev
+  api:
+    <<: *common-api-dev
+    hostname: api
     entrypoint: bin/rails
     command: server --binding=0.0.0.0
     environment:
@@ -56,13 +65,18 @@ services:
     ports:
       - "3000:3000"
 
-  debug:
-    <<: *common-args-dev
-    entrypoint: rdebug-ide
-    command: --host 0.0.0.0 --port 2353 -- bin/rails server --binding=0.0.0.0
+  npm:
+    <<: *common-web-dev
+    entrypoint: npm
     ports:
-      - "3000:3000"
-      - "2353:2353"
+      - "4200:4200"
+
+  web:
+    <<: *common-web-dev
+    entrypoint: npm
+    command: run start
+    ports:
+      - "4200:4200"
 
   db:
     hostname: db
