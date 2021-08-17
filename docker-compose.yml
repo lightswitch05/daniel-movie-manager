@@ -1,0 +1,90 @@
+version: '3.7'
+
+x-common-web-dev: &common-web-dev
+  build:
+    context: .
+    dockerfile: Dockerfile.web-dev
+  volumes:
+    - "./web-client:/opt/web-client"
+  working_dir: /opt/web-client
+
+x-common-api-dev: &common-api-dev
+  build:
+    context: .
+    dockerfile: Dockerfile.api-dev
+  volumes:
+    - "./movie-api:/opt/movie-api"
+    - "./.tmp/movie-api/bundle:/usr/local/bundle"
+  working_dir: /opt/movie-api
+
+services:
+  ruby:
+    <<: *common-api-dev
+
+  gem:
+    <<: *common-api-dev
+    entrypoint: gem
+
+  bundle:
+    <<: *common-api-dev
+    entrypoint: bundle
+    command: install
+
+  rails:
+    <<: *common-api-dev
+    entrypoint: rails
+    environment:
+      DEV_DB_PASSWORD: ${ROOT_DB_PASSWORD}
+      TEST_DB_PASSWORD: ${ROOT_DB_PASSWORD}
+
+  rake:
+    <<: *common-api-dev
+    entrypoint: bin/rake
+    environment:
+      DEV_DB_PASSWORD: ${ROOT_DB_PASSWORD}
+      TEST_DB_PASSWORD: ${ROOT_DB_PASSWORD}
+
+  test:
+    <<: *common-api-dev
+    entrypoint: bin/rake
+    depends_on:
+      - db
+    command: test
+    environment:
+      DEV_DB_PASSWORD: ${ROOT_DB_PASSWORD}
+      TEST_DB_PASSWORD: ${ROOT_DB_PASSWORD}
+
+  api:
+    <<: *common-api-dev
+    hostname: api
+    entrypoint: bin/rails
+    command: server --binding=0.0.0.0
+    environment:
+      DEV_DB_PASSWORD: ${ROOT_DB_PASSWORD}
+      TEST_DB_PASSWORD: ${ROOT_DB_PASSWORD}
+    ports:
+      - "3000:3000"
+
+  npm:
+    <<: *common-web-dev
+    entrypoint: npm
+    ports:
+      - "4200:4200"
+
+  web:
+    <<: *common-web-dev
+    entrypoint: npm
+    command: run start
+    ports:
+      - "4200:4200"
+
+  db:
+    hostname: db
+    image: postgres:13.3-buster
+    environment:
+      POSTGRES_USER: movie_api
+      POSTGRES_PASSWORD: ${ROOT_DB_PASSWORD}
+    volumes:
+      - ./db/data:/var/lib/postgresql/data
+    ports:
+      - 8898:5432

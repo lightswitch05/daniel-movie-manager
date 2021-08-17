@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class V1::MoviesControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    allow(OpenMovieDb).to receive(:poster).and_return('https://example.com/movie.png')
+  end
+
   test 'should get index' do
     get v1_movies_url
     assert_response :success
@@ -38,39 +42,31 @@ class V1::MoviesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create a movie' do
-    OpenMovieDb.stub :poster, 'https://example.com/movie.png' do
-      post v1_movies_url, params: { movie: get_valid_movie_request }
-      assert_response :success
-    end
+    post v1_movies_url, params: { movie: get_valid_movie_request }
+    assert_response :success
   end
 
   test 'should not create an invalid movie' do
     movie = get_valid_movie_request
     movie[:title] = nil
-    OpenMovieDb.stub :poster, 'https://example.com/movie.png' do
-      post v1_movies_url, params: { movie: movie }
-      assert_response :unprocessable_entity
-    end
+    post v1_movies_url, params: { movie: movie }
+    assert_response :unprocessable_entity
   end
 
   test 'should update a movie' do
     get v1_movie_url(2)
     movie = JSON.parse @response.body
     movie['release_year'] += 1
-    OpenMovieDb.stub :poster, 'https://example.com/movie.png' do
-      put v1_movie_url(2), params: { movie: movie }
-      assert_response :success
-    end
+    put v1_movie_url(2), params: { movie: movie }
+    assert_response :success
   end
 
-  test 'should ont update an invalid movie' do
+  test 'should not update an invalid movie' do
     get v1_movie_url(2)
     movie = JSON.parse @response.body
     movie['release_year'] = nil
-    OpenMovieDb.stub :poster, 'https://example.com/movie.png' do
-      put v1_movie_url(2), params: { movie: movie }
-      assert_response :unprocessable_entity
-    end
+    put v1_movie_url(2), params: { movie: movie }
+    assert_response :unprocessable_entity
   end
 
   private

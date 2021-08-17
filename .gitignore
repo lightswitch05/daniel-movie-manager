@@ -2,3 +2,6 @@
 *.iml
 node_modules
 environment/.vagrant
+.env
+.tmp
+db/data

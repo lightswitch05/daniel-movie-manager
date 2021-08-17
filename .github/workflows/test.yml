@@ -1,0 +1,39 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.tmp/movie-api/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: ${{ runner.os }}-gems-
+
+      - name: Setup
+        run: |
+          docker-compose pull db &
+          docker-compose up bundle
+
+      - name: Run Tests
+        run: |
+          docker-compose up -d db
+          docker-compose logs -f db &
+          sleep 120
+          docker-compose run --rm rails db:migrate
+          docker-compose run --rm rails test
+        env:
+          ROOT_DB_PASSWORD: ${{ secrets.ROOT_DB_PASSWORD }}

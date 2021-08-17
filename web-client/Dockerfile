@@ -11,7 +11,7 @@ RUN npm -g config set user root \
     && make build
 
 # Runtime
-FROM nginx:1.13-alpine
+FROM nginx:1.21
 
 RUN apk --no-cache add --upgrade nano \
     && rm -rf /var/cache/apk/*
